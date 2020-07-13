@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!--Top level DayNight theme to be used in AndroidManifest.xml-->
+    <style name="Theme.MyApp" parent="Base.Theme.MyApp" />
+    <!--Base custom theme which will be shared between both light and dark theme variants-->
+    <style name="Base.Theme.MyApp" parent="Base.Theme.MaterialThemeBuilder">
+        <!--Material color attributes (light theme) -->
+        <!--colorPrimary colors map to components and elements, such as app bars and buttons. -->
+        <!--colorSecondary colors are most often used as accents on components, such as FABs and -->
+        <!--selection controls.-->
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorSecondary">@color/green_200</item>
+        <item name="colorSecondaryVariant">@color/green_500</item>
+        <!--colorBackground appears behind scrollable content and is used for the default window-->
+        <!--background. colorSurface is mapped to the surface of components such as cards, sheets-->
+        <!--and menus. colorError is used to indicate an error state for components such as-->
+        <!--text fields.-->
+        <item name="android:colorBackground">@color/white_50</item>
+        <item name="colorSurface">@color/white_50</item>
+        <item name="colorError">@color/red_600</item>
+        <!--"On" colors define how text, icons and strokes are colored in relation to the surface-->
+        <!--on which they appear.-->
+        <item name="colorOnPrimary">@color/white_50</item>
+        <item name="colorOnSecondary">@color/black_900</item>
+        <item name="colorOnBackground">@color/black_900</item>
+        <item name="colorOnSurface">@color/black_900</item>
+        <item name="colorOnError">@color/white_50</item>
+        <!--Material type attributes-->
+        <item name="textAppearanceHeadline1">@style/TextAppearance.MyTheme.Headline1</item>
+        <item name="textAppearanceHeadline2">@style/TextAppearance.MyTheme.Headline2</item>
+        <item name="textAppearanceHeadline3">@style/TextAppearance.MyTheme.Headline3</item>
+        <item name="textAppearanceHeadline4">@style/TextAppearance.MyTheme.Headline4</item>
+        <item name="textAppearanceHeadline5">@style/TextAppearance.MyTheme.Headline5</item>
+        <item name="textAppearanceHeadline6">@style/TextAppearance.MyTheme.Headline6</item>
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.MyTheme.Subtitle1</item>
+        <item name="textAppearanceSubtitle2">@style/TextAppearance.MyTheme.Subtitle2</item>
+        <item name="textAppearanceBody1">@style/TextAppearance.MyTheme.Body1</item>
+        <item name="textAppearanceBody2">@style/TextAppearance.MyTheme.Body2</item>
+        <item name="textAppearanceButton">@style/TextAppearance.MyTheme.Button</item>
+        <item name="textAppearanceCaption">@style/TextAppearance.MyTheme.Caption</item>
+        <item name="textAppearanceOverline">@style/TextAppearance.MyTheme.Overline</item>
+        <!--Material shape attributes-->
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.MyTheme.SmallComponent
+        </item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.MyTheme.MediumComponent
+        </item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.MyTheme.LargeComponent
+        </item>
+        <!--Component styles-->
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.MaterialComponents.Dialog.Alert
+        </item>
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.MyTheme.BottomSheetDialog</item>
+        <item name="navigationViewStyle">@style/Widget.MyTheme.NavigationView</item>
+
+        <item name="android:textColor">@color/black_800</item>
+    </style>
+
+    <style name="Base.Theme.MaterialThemeBuilder" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:statusBarColor" tools:ignore="NewApi">?attr/colorSurface</item>
+        <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
+        <item name="android:navigationBarColor" tools:ignore="NewApi">
+            ?android:attr/colorBackground
+        </item>
+        <item name="android:windowLightNavigationBar" tools:ignore="NewApi">true</item>
+        <item name="android:navigationBarDividerColor" tools:ignore="NewApi">
+            ?attr/colorControlHighlight
+        </item>
+    </style>
+
+    <style name="Widget.BPay.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="hintTextAppearance">@style/TextAppearance.BPay.TextInputLayout.HintText</item>
+        <item name="hintTextColor">@color/design_default_color_primary</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="colorOnSurface">?attr/colorPrimary</item>
+        <item name="boxStrokeColor">?attr/colorPrimary</item>
+    </style>
+
+    <style name="TextAppearance.BPay.TextInputLayout.HintText" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="Widget.BPay.Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
+        <item name="backgroundTint">?attr/colorPrimary</item>
+        <item name="android:stateListAnimator" tools:ignore="NewApi">
+            @animator/next_button_state_list_anim
+        </item>
+    </style>
+
+    <style name="Widget.BPay.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="TextAppearance.BPay.Title" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="textAllCaps">false</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <!--    Toolbar-->
+    <style name="ThemeOverlay.BPay.Toolbar.Surface" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:theme">@style/BaseToolbarTheme</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textAlignment">center</item>
+        <item name="titleTextAppearance">@style/CustomTitleTextAppearance</item>
+        <item name="android:textAppearance">@style/CustomTitleTextAppearance</item>
+        <item name="subtitleTextAppearance">@style/CustomSubTitleTextAppearance</item>
+    </style>
+
+    <style name="BaseToolbarTheme">
+        <!-- Color used for the title of the Toolbar - as long as not overridden -->
+        <item name="android:textColorPrimary">?attr/colorOnPrimary</item>
+        <!-- Used to color back button and three dots -->
+        <item name="android:textColorSecondary">?attr/colorOnPrimary</item>
+    </style>
+
+    <style name="CustomTitleTextAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <!--        <item name="android:textSize">20sp</item>-->
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="titleTextColor">?attr/colorOnPrimary</item>
+        <!--        <item name="android:textStyle">bold</item>-->
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textAlignment">center</item>
+
+    </style>
+
+    <style name="CustomSubTitleTextAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?attr/colorOnSecondary</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <!--    Collapsing toolbar-->
+    <style name="TextAppearance.BPay.CollapsingToolbar.Collapsed" parent="">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+    </style>
+
+    <style name="TextAppearance.BPay.CollapsingToolbar.Expanded" parent="">
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+</resources>

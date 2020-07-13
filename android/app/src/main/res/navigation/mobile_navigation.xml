@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="mk.grabit.gpay.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_barcodeFragment"
+            app:destination="@id/barcodeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="mk.grabit.gpay.ui.settings.SettingsFragment"
+        android:label="@string/menu_settings"
+        tools:layout="@layout/fragment_settings" />
+
+    <fragment
+        android:id="@+id/transactionsFragment"
+        android:name="mk.grabit.gpay.ui.transactions.TransactionsFragment"
+        android:label="@string/menu_transactions"
+        tools:layout="@layout/fragment_transactions" >
+        <action
+            android:id="@+id/action_transactionsFragment_to_transactionDetailsFragment"
+            app:destination="@id/transactionDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="mk.grabit.gpay.ui.login.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_home_fragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/barcodeFragment"
+        android:name="mk.grabit.gpay.ui.barcode.BarcodeFragment"
+        android:label="BarcodeFragment" />
+    <fragment
+        android:id="@+id/manageCreditCardsFragment"
+        android:name="mk.grabit.gpay.ui.creditcards.ManageCreditCardsFragment"
+        android:label="ManageCreditCardsFragment"
+        tools:layout="@layout/fragment_manage_credit_cards"/>
+    <fragment
+        android:id="@+id/transactionDetailsFragment"
+        android:name="mk.grabit.gpay.ui.transactions.details.TransactionDetailsFragment"
+        android:label="TransactionDetailsFragment" >
+        <argument
+            android:name="transactionId"
+            app:argType="integer" />
+    </fragment>
+</navigation>

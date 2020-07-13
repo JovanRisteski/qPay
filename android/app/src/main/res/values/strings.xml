@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">gPay</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">John Doe</string>
+    <string name="nav_header_subtitle">johndoe@gpay.mk</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Wallet</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_manage_credit_cards">Credit Cards</string>
+    <string name="menu_transactions">Transactions</string>
+    <string name="menu_logout">Logout</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="next">Next</string>
+    <string name="cancel">Cancel</string>
+    <string name="so_far_today">So far today:</string>
+    <string name="monthly_statistics">Monthly statistics</string>
+</resources>
