@@ -19,6 +19,10 @@
     "require": {
         "slim/slim": "^3.0",
         "slim/flash": "^0.1.0",
-        "monolog/monolog": "^1.13"
+        "monolog/monolog": "^1.13",
+        "ramsey/uuid": "^4.0.1",
+        "endroid/qr-code": "^3.9.1"
+    },
+    "require-dev": {
     }
 }
