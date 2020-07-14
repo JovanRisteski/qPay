@@ -3,7 +3,7 @@ return [
     'settings' => [
         // Slim Settings
         'determineRouteBeforeAppMiddleware' => false,
-        'displayErrorDetails' => false,
+        'displayErrorDetails'               => true,
 
         // // View settings
         // 'view' => [
@@ -14,6 +14,16 @@ return [
         //         'auto_reload' => true,
         //     ],
         // ],
+
+        // MySQL
+        'mysql' => [
+            'host'     => 'database',
+            'dbname'   => 'docker',
+            'charset'  => 'utf8mb4',
+            'port'     => '3306',
+            'user'     => 'docker',
+            'password' => 'docker',
+        ],
 
         // monolog settings
         'logger' => [
