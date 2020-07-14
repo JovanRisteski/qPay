@@ -1,6 +1,2 @@
-.idea/
-.vscode/
-/coverage/
-/logs/*
-!/logs/README.md
-.phpunit.result.cache
+log/*
+cache/*

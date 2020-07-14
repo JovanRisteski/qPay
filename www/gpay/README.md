@@ -1,42 +1,33 @@
-# Slim Framework 4 Skeleton Application
+# Slim 3 Skeleton
 
-[![Coverage Status](https://coveralls.io/repos/github/slimphp/Slim-Skeleton/badge.svg?branch=master)](https://coveralls.io/github/slimphp/Slim-Skeleton?branch=master)
+This is a simple skeleton project for Slim 3 that includes Twig, Flash messages and Monolog.
 
-Use this skeleton application to quickly setup and start working on a new Slim Framework 4 application. This application uses the latest Slim 4 with Slim PSR-7 implementation and PHP-DI container implementation. It also uses the Monolog logger.
+## Create your project:
 
-This skeleton application was built for Composer. This makes setting up a new Slim Framework application quick and easy.
+    $ composer create-project --no-interaction --stability=dev akrabat/slim3-skeleton my-app
 
-## Install the Application
+### Run it:
 
-Run this command from the directory in which you want to install your new Slim Framework application.
+1. `$ cd my-app`
+2. `$ php -S 0.0.0.0:8888 -t public public/index.php`
+3. Browse to http://localhost:8888
 
-```bash
-composer create-project slim/slim-skeleton [my-app-name]
-```
+## Key directories
 
-Replace `[my-app-name]` with the desired directory name for your new application. You'll want to:
+* `app`: Application code
+* `app/src`: All class files within the `App` namespace
+* `app/templates`: Twig template files
+* `cache/twig`: Twig's Autocreated cache files
+* `log`: Log files
+* `public`: Webserver root
+* `vendor`: Composer dependencies
 
-* Point your virtual host document root to your new application's `public/` directory.
-* Ensure `logs/` is web writable.
+## Key files
 
-To run the application in development, you can run these commands 
-
-```bash
-cd [my-app-name]
-composer start
-```
-
-Or you can use `docker-compose` to run the app with `docker`, so you can run these commands:
-```bash
-cd [my-app-name]
-docker-compose up -d
-```
-After that, open `http://localhost:8080` in your browser.
-
-Run this command in the application directory to run the test suite
-
-```bash
-composer test
-```
-
-That's it! Now go build something cool.
+* `public/index.php`: Entry point to application
+* `app/settings.php`: Configuration
+* `app/dependencies.php`: Services for Pimple
+* `app/middleware.php`: Application middleware
+* `app/routes.php`: All application routes are here
+* `app/src/Action/HomeAction.php`: Action class for the home page
+* `app/templates/home.twig`: Twig template file for the home page

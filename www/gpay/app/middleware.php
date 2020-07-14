@@ -1,9 +1,4 @@
 <?php
-declare(strict_types=1);
+// Application middleware
 
-use App\Application\Middleware\SessionMiddleware;
-use Slim\App;
-
-return function (App $app) {
-    $app->add(SessionMiddleware::class);
-};
+// e.g: $app->add(new \Slim\Csrf\Guard);
