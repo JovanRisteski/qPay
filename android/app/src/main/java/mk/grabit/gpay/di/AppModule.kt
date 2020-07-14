@@ -1,14 +1,19 @@
 package mk.grabit.gpay.di
 
+import android.content.Context
+import androidx.room.Room
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import mk.grabit.gpay.BuildConfig
 import mk.grabit.gpay.data.repository.MainRepository
-import mk.grabit.gpay.networking.BPayService
+import mk.grabit.gpay.db.GPayDatabase
+import mk.grabit.gpay.db.TransactionDao
+import mk.grabit.gpay.networking.GPayService
 import mk.grabit.gpay.util.Const
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -20,10 +25,28 @@ import javax.inject.Singleton
 @InstallIn(ApplicationComponent::class)
 object AppModule {
 
+    @Singleton
+    @Provides
+    fun provideGPayDatabase(
+        @ApplicationContext app: Context
+    ) = Room.databaseBuilder(
+        app,
+        GPayDatabase::class.java,
+        "gpay_database"
+    )
+        .fallbackToDestructiveMigration()
+        .build()
+
+    @Singleton
+    @Provides
+    fun provideTransactionDao(db: GPayDatabase) = db.getTransactionDao()
 
     @Provides
     @Singleton
-    fun provideMainRepository() = MainRepository()
+    fun provideMainRepository(
+        transactionDao: TransactionDao,
+        gPayService: GPayService
+    ) = MainRepository(transactionDao, gPayService)
 
     @Provides
     fun provideOkHttpClient(interceptor: HttpLoggingInterceptor): OkHttpClient =
@@ -51,10 +74,10 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideBPayService(
+    fun provideGPayService(
         okHttpClient: OkHttpClient,
         converterFactory: MoshiConverterFactory
-    ) = provideService(okHttpClient, converterFactory, BPayService::class.java)
+    ) = provideService(okHttpClient, converterFactory, GPayService::class.java)
 
     private fun <T> provideService(
         okHttpClient: OkHttpClient,

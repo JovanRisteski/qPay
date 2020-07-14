@@ -7,21 +7,23 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import dagger.hilt.android.AndroidEntryPoint
 import mk.grabit.gpay.R
-import mk.grabit.gpay.data.model.Transaction
 import mk.grabit.gpay.databinding.FragmentHomeBinding
-import mk.grabit.gpay.util.TransactionType
 import java.util.*
 
+@AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home), OnChartValueSelectedListener {
 
-    private lateinit var homeViewModel: HomeViewModel
+    private val viewModel: HomeViewModel by viewModels()
     private var binding: FragmentHomeBinding? = null
     private val parties = arrayOf(
         "Party A", "Party B", "Party C", "Party D", "Party E", "Party F", "Party G", "Party H",
@@ -34,68 +36,38 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnChartValueSelectedListe
         super.onViewCreated(view, savedInstanceState)
         binding = DataBindingUtil.bind(view)
 
-
         val transactionAdapter = TransactionAdapter {
-            Toast.makeText(requireContext(), it.id.toString(), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                requireContext(),
+                "Transaction id: ${it.paymentId}",
+                Toast.LENGTH_SHORT
+            ).show()
         }
-
-        val transactions = arrayListOf(
-            Transaction(
-                1,
-                "#9asf2HK5q2",
-                840.00f,
-                "Tinex MKD",
-                "Shopping",
-                TransactionType.OUTCOME
-            ),
-            Transaction(
-                2,
-                "#9mxa0rt78",
-                267.00f,
-                "Burger King",
-                "Food & Drink",
-                TransactionType.OUTCOME
-            ),
-            Transaction(
-                3,
-                "#80fa-uymaf42",
-                1299.00f,
-                "SportVision MK",
-                "Clothes",
-                TransactionType.OUTCOME
-            ),
-            Transaction(
-                4,
-                "#cn059@K2I",
-                45.00f,
-                "Ramstore Mall Centar",
-                "Shopping",
-                TransactionType.OUTCOME
-            ),
-            Transaction(
-                5,
-                "#p9eMFk=90s",
-                990.00f,
-                "Jumbo VERO",
-                "Toys & Groceries",
-                TransactionType.OUTCOME
-            ),
-            Transaction(
-                6,
-                "#0a8fn-FY2",
-                4899.99f,
-                "Timberland Ramstore Mall",
-                "Clothes",
-                TransactionType.OUTCOME
-            )
-        )
 
         binding?.transactionRecyclerViewAdapter?.adapter = transactionAdapter
 
-        transactionAdapter.submitList(transactions)
-
         setPieChart()
         setLineChart()
+
+        observeUi(transactionAdapter)
+    }
+
+    private fun observeUi(transactionAdapter: TransactionAdapter) {
+        viewModel.transactions.observe(viewLifecycleOwner, Observer {
+            transactionAdapter.submitList(it) {
+                viewModel.setIsLoading(false)
+            }
+        })
+
+        viewModel.isLoading.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                binding?.progressBar?.visibility = View.VISIBLE
+                binding?.viewGroup?.visibility = View.GONE
+            } else {
+                binding?.progressBar?.visibility = View.GONE
+                binding?.viewGroup?.visibility = View.VISIBLE
+            }
+        })
     }
 
     private fun setPieChart() {
@@ -126,8 +98,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnChartValueSelectedListe
         binding?.pieChart?.isHighlightPerTapEnabled = true
 
         // add a selection listener
-
-        // add a selection listener
         binding?.pieChart?.setOnChartValueSelectedListener(this)
 
         binding?.pieChart?.animateY(1400, Easing.EaseInOutQuad)
@@ -155,8 +125,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnChartValueSelectedListe
         dataSet.valueLinePart2Length = 0.4f
 
         //dataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
-
-        //dataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
         dataSet.yValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
 
         val data = PieData(dataSet)
@@ -164,8 +132,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnChartValueSelectedListe
         data.setValueTextSize(11f)
         data.setValueTextColor(Color.BLACK)
         binding?.pieChart?.data = data
-
-        // undo all highlights
 
         // undo all highlights
         binding?.pieChart?.highlightValues(null)
@@ -184,8 +150,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnChartValueSelectedListe
         }
 
         // create a dataset and give it a type
-
-        // create a dataset and give it a type
         val set1 = LineDataSet(values, "DataSet 1")
 
         set1.color = Color.BLACK
@@ -196,16 +160,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnChartValueSelectedListe
         set1.setDrawFilled(false)
 
         // create a data object with the data sets
-
-        // create a data object with the data sets
         val data = LineData(set1)
 
         // set data
-
-        // set data
         binding?.lineChart?.data = data
-
-        // get the legend (only possible after setting data)
 
         // get the legend (only possible after setting data)
         val l: Legend = binding?.lineChart?.getLegend()!!

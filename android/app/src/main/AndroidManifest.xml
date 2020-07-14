@@ -12,7 +12,8 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/qr_code_logo_transparent"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MyApp">
+        android:theme="@style/Theme.MyApp"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">

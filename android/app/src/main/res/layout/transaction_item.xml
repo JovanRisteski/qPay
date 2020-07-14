@@ -35,11 +35,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_margin="8dp"
-                android:src="@{transaction.type.equals(TransactionType.INCOME) ? @drawable/money_income : @drawable/money_outcome}"
+                android:src="@drawable/money_outcome"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/money_outcome" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/transaction_recipient"
@@ -48,7 +47,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:text="@{transaction.recipient}"
+                android:text="@{transaction.merchant.name}"
                 android:textColor="@color/black_800"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -65,7 +64,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
-                android:text="@{transaction.description}"
+                android:text="@{transaction.merchant.category}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/transaction_image_view"
                 app:layout_constraintTop_toBottomOf="@id/transaction_recipient"
@@ -78,15 +77,15 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
-                android:text="@{transaction.type.equals(TransactionType.OUTCOME) ? `-` + transaction.amount.toString() + `den` : `+` + transaction.amount.toString() + `den` }"
-                android:textColor="@{transaction.type.equals(TransactionType.OUTCOME) ? @color/red_600 : @color/green_800}"
+                android:text="@{`-` + transaction.amount + `den`  }"
+                android:textColor="@color/red_600"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.7"
-                tools:text="123.00" />
+                tools:text="-123.00" />
 
 
             <!--            <TextView-->

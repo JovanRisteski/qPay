@@ -69,19 +69,19 @@
         </item>
     </style>
 
-    <style name="Widget.BPay.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="hintTextAppearance">@style/TextAppearance.BPay.TextInputLayout.HintText</item>
+    <style name="Widget.GPay.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="hintTextAppearance">@style/TextAppearance.GPay.TextInputLayout.HintText</item>
         <item name="hintTextColor">@color/design_default_color_primary</item>
         <item name="android:paddingBottom">8dp</item>
         <item name="colorOnSurface">?attr/colorPrimary</item>
         <item name="boxStrokeColor">?attr/colorPrimary</item>
     </style>
 
-    <style name="TextAppearance.BPay.TextInputLayout.HintText" parent="TextAppearance.MaterialComponents.Subtitle2">
+    <style name="TextAppearance.GPay.TextInputLayout.HintText" parent="TextAppearance.MaterialComponents.Subtitle2">
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
-    <style name="Widget.BPay.Button" parent="Widget.MaterialComponents.Button">
+    <style name="Widget.GPay.Button" parent="Widget.MaterialComponents.Button">
         <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
         <item name="backgroundTint">?attr/colorPrimary</item>
         <item name="android:stateListAnimator" tools:ignore="NewApi">
@@ -89,18 +89,18 @@
         </item>
     </style>
 
-    <style name="Widget.BPay.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
+    <style name="Widget.GPay.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
-    <style name="TextAppearance.BPay.Title" parent="TextAppearance.MaterialComponents.Headline4">
+    <style name="TextAppearance.GPay.Title" parent="TextAppearance.MaterialComponents.Headline4">
         <item name="textAllCaps">false</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
     <!--    Toolbar-->
-    <style name="ThemeOverlay.BPay.Toolbar.Surface" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="ThemeOverlay.GPay.Toolbar.Surface" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:background">?attr/colorPrimary</item>
         <item name="android:theme">@style/BaseToolbarTheme</item>
         <item name="android:gravity">center</item>
@@ -135,12 +135,12 @@
     </style>
 
     <!--    Collapsing toolbar-->
-    <style name="TextAppearance.BPay.CollapsingToolbar.Collapsed" parent="">
+    <style name="TextAppearance.GPay.CollapsingToolbar.Collapsed" parent="">
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>
 
-    <style name="TextAppearance.BPay.CollapsingToolbar.Expanded" parent="">
+    <style name="TextAppearance.GPay.CollapsingToolbar.Expanded" parent="">
         <item name="android:textColor">?attr/colorOnPrimary</item>
         <item name="android:textSize">28sp</item>
         <item name="android:textStyle">bold</item>

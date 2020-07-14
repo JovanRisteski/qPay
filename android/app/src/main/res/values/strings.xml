@@ -16,6 +16,6 @@
     <string name="password">password</string>
     <string name="next">Next</string>
     <string name="cancel">Cancel</string>
-    <string name="so_far_today">So far today:</string>
+    <string name="recent_transactions">Recent transactions:</string>
     <string name="monthly_statistics">Monthly statistics</string>
 </resources>

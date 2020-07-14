@@ -10,7 +10,10 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.google.zxing.Result
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -19,21 +22,42 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView
 import mk.grabit.gpay.R
 import mk.grabit.gpay.databinding.FragmentBarcodeBinding
 import mk.grabit.gpay.util.RequestCode
+import mk.grabit.gpay.util.Resource
+
+@AndroidEntryPoint
 class BarcodeFragment : Fragment(R.layout.fragment_barcode), ZXingScannerView.ResultHandler {
 
     private var isReady = true
     private var mScannerView: ZXingScannerView? = null
-    private var scanResults: TextView? = null
     private var binding: FragmentBarcodeBinding? = null
+    private val viewModel: BarcodeViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = DataBindingUtil.bind(view)
-
         mScannerView = binding?.surfaceView
+
+        observeUi()
     }
 
-    public override fun onResume() {
+    private fun observeUi() {
+        viewModel.transactionStatus.observe(viewLifecycleOwner, Observer {
+            when(it) {
+                is Resource.Success -> {
+                    binding?.progressBar?.visibility = View.GONE
+                }
+                is Resource.Loading -> {
+                    binding?.progressBar?.visibility = View.VISIBLE
+                }
+                is Resource.Error -> {
+                    binding?.progressBar?.visibility = View.GONE
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+    }
+
+    override fun onResume() {
         super.onResume()
         if (ContextCompat.checkSelfPermission(
                 requireContext(),
@@ -70,7 +94,9 @@ class BarcodeFragment : Fragment(R.layout.fragment_barcode), ZXingScannerView.Re
 
     private fun updateBarcode(barcode: String) {
         binding?.barcodeTextView?.text = barcode
+        Toast.makeText(requireContext(), barcode, Toast.LENGTH_SHORT).show()
         pauseScanning(1500)
+        viewModel.initPayment(barcode)
     }
 
 

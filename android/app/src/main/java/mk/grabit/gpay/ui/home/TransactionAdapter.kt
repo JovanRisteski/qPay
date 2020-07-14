@@ -54,7 +54,7 @@ class TransactionAdapter(
 private class DiffCallback : DiffUtil.ItemCallback<Transaction>() {
 
     override fun areItemsTheSame(oldItem: Transaction, newItem: Transaction): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.paymentId == newItem.paymentId
     }
 
     override fun areContentsTheSame(oldItem: Transaction, newItem: Transaction): Boolean {
