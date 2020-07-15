@@ -49,6 +49,6 @@ class PaymentStatusAction
         return $response->withJson([
             'status'   => $payment['status'],
             'modified' => $payment['modified']
-        ])->withHeader('Access-Control-Allow-Origin', '*');
+        ]);
     }
 }

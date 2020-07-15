@@ -48,6 +48,6 @@ class PaymentCancelAction
 
         return $response->withJson([
             'timestamp' => $payment['modified']
-        ])->withHeader('Access-Control-Allow-Origin', '*');
+        ]);
     }
 }
