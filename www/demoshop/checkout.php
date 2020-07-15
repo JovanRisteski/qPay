@@ -8,6 +8,7 @@ $prices = [
     2 => 20,
     3 => 50
 ];
+
 ?>
 <html lang="en">
   <head>
@@ -111,10 +112,8 @@ $prices = [
             ?>
                 <tr>
                     <td>
-
                     </td>
                     <td>
-
                     </td>
                     <td>
                         Total
@@ -125,13 +124,13 @@ $prices = [
                 </tr>
             </table>
             <div class="container" >
-                <img id="QR" class="d-none" style="height: 250px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/1200px-QR_code_for_mobile_English_Wikipedia.svg.png">
+                <img id="QR" class="d-none" style="height: 250px;" src="">
             </div>
             <div id="instructions" class="container d-none">
-                Scan the code with your gPay app
+                Scan the code with your qPay app
             </div>
             <div class="container">
-                <button id="initPayment" class="btn btn-success" onclick="initiatePayment()">Pay with gPay</button>
+                <button id="initPayment" class="btn btn-success" onclick="initiatePayment()">Pay with qPay</button>
                 <button id="cancelPayment" class="btn btn-danger d-none" onclick="cancelPayment()">Cancel</button>
             </div>
         </div>
@@ -139,7 +138,14 @@ $prices = [
 
     </main>
 
-
+    <footer class="text-muted">
+      <div class="container">
+        <p class="float-right">
+          <a href="#">Back to top</a>
+        </p>
+        <p>This is an example web shop for the purposes of the qPay demo</p>
+      </div>
+    </footer>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -150,6 +156,12 @@ $prices = [
     <script src="../../assets/js/vendor/bootstrap.min.js"></script>
     <script src="../../assets/js/vendor/holder.min.js"></script>
     <script src="../../assets/js/shop.js"></script>
+    <script type="text/javascript">
+        p1 = <?php echo $p1;?>;
+        p2 = <?php echo $p2;?>;
+        p3 = <?php echo $p3;?>;
+        cart = <?php echo $total;?>;
+    </script>
 
 
 <svg xmlns="http://www.w3.org/2000/svg" width="348" height="225" viewBox="0 0 348 225" preserveAspectRatio="none" style="display: none; visibility: hidden; position: absolute; top: -100%; left: -100%;"><defs><style type="text/css"></style></defs><text x="0" y="17" style="font-weight:bold;font-size:17pt;font-family:Arial, Helvetica, Open Sans, sans-serif">Thumbnail</text></svg></body></html>
