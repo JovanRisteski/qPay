@@ -1,25 +1,30 @@
 package mk.grabit.gpay.ui.barcode
 
 import android.Manifest
+import android.app.AlertDialog
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.NavHostFragment
 import com.google.zxing.Result
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.proceed_transaction_dialog.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 import mk.grabit.gpay.R
+import mk.grabit.gpay.data.model.Transaction
 import mk.grabit.gpay.databinding.FragmentBarcodeBinding
 import mk.grabit.gpay.util.RequestCode
 import mk.grabit.gpay.util.Resource
@@ -31,6 +36,7 @@ class BarcodeFragment : Fragment(R.layout.fragment_barcode), ZXingScannerView.Re
     private var mScannerView: ZXingScannerView? = null
     private var binding: FragmentBarcodeBinding? = null
     private val viewModel: BarcodeViewModel by viewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,20 +47,59 @@ class BarcodeFragment : Fragment(R.layout.fragment_barcode), ZXingScannerView.Re
     }
 
     private fun observeUi() {
-        viewModel.transactionStatus.observe(viewLifecycleOwner, Observer {
-            when(it) {
+
+        viewModel.transactionAction.observe(viewLifecycleOwner, Observer {
+            when (it) {
                 is Resource.Success -> {
                     binding?.progressBar?.visibility = View.GONE
+                    binding?.surfaceView?.visibility = View.VISIBLE
+                    showProceedDialog(it.data!!)
                 }
                 is Resource.Loading -> {
                     binding?.progressBar?.visibility = View.VISIBLE
+                    binding?.surfaceView?.visibility = View.GONE
+                    // TODO show progress dialog, transaction in progress
                 }
                 is Resource.Error -> {
                     binding?.progressBar?.visibility = View.GONE
+                    // TODO Show transaction failed
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    viewModel.acknowledgeTransactionActionStatus()
+
+                }
+                is Resource.None -> {
+
                 }
             }
         })
+    }
+
+    private fun showProceedDialog(transaction: Transaction) {
+        val dialogView =
+            LayoutInflater.from(context).inflate(R.layout.proceed_transaction_dialog, null)
+
+        val alertDialog = AlertDialog.Builder(context).apply {
+            setView(dialogView)
+            setCancelable(false)
+        }.create()
+
+        dialogView.apply {
+            merchant.text = getString(R.string.merchant, transaction.merchant.name)
+            amount.text = getString(R.string.amount, transaction.amount.toString())
+            proceed_button.setOnClickListener {
+                sharedViewModel.setTransaction(transaction)
+                navigateToPaymentFragment(transaction)
+                viewModel.acknowledgeTransactionActionStatus()
+                alertDialog.dismiss()
+            }
+            dialogView.cancel_button.setOnClickListener {
+                viewModel.cancelTransaction(transaction)
+                viewModel.acknowledgeTransactionActionStatus()
+                alertDialog.dismiss()
+                navigateToDashboard()
+            }
+        }
+        alertDialog.show()
     }
 
     override fun onResume() {
@@ -94,11 +139,20 @@ class BarcodeFragment : Fragment(R.layout.fragment_barcode), ZXingScannerView.Re
 
     private fun updateBarcode(barcode: String) {
         binding?.barcodeTextView?.text = barcode
-        Toast.makeText(requireContext(), barcode, Toast.LENGTH_SHORT).show()
         pauseScanning(1500)
         viewModel.initPayment(barcode)
     }
 
+    private fun navigateToPaymentFragment(transaction: Transaction) {
+        val action = BarcodeFragmentDirections.actionBarcodeFragmentToPaymentFragment()
+        NavHostFragment.findNavController(this).navigate(action)
+        //TODO add transaction to shared view model
+    }
+
+    private fun navigateToDashboard() {
+        val action = BarcodeFragmentDirections.actionBarcodeFragmentToHomeFragment()
+        NavHostFragment.findNavController(this).navigate(action)
+    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -106,13 +160,14 @@ class BarcodeFragment : Fragment(R.layout.fragment_barcode), ZXingScannerView.Re
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when(requestCode) {
+        when (requestCode) {
             RequestCode.CAMERA -> {
                 if (grantResults.get(0) == PackageManager.PERMISSION_GRANTED) {
                     mScannerView?.startCamera()          // Start camera on resume
                     mScannerView?.setResultHandler(this) // Register ourselves as a handler for scan results.
                 } else {
-                    Toast.makeText(requireContext(), "No camera permission", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), "No camera permission", Toast.LENGTH_LONG)
+                        .show()
                 }
             }
         }

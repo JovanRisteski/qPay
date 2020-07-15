@@ -19,7 +19,7 @@ class MerchantTypeConverter: Serializable {
     @TypeConverter
     fun toOptionValuesList(optionValuesString: String?): Merchant {
         if (optionValuesString == null) {
-            return Merchant(0, "", "")
+            return Merchant("", "")
         }
         val gson = Gson()
         val type =

@@ -42,7 +42,19 @@
     <fragment
         android:id="@+id/barcodeFragment"
         android:name="mk.grabit.gpay.ui.barcode.BarcodeFragment"
-        android:label="BarcodeFragment" />
+        android:label="BarcodeFragment"
+        tools:layout="@layout/fragment_barcode">
+        <action
+            android:id="@+id/action_barcodeFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment"
+            app:popUpTo="@id/barcodeFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_barcodeFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/barcodeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/manageCreditCardsFragment"
         android:name="mk.grabit.gpay.ui.creditcards.ManageCreditCardsFragment"
@@ -56,4 +68,9 @@
             android:name="transactionId"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="mk.grabit.gpay.ui.barcode.payment.PaymentFragment"
+        android:label="PaymentFragment"
+        tools:layout="@layout/fragment_payment"/>
 </navigation>

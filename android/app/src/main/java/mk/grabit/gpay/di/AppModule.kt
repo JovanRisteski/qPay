@@ -51,6 +51,7 @@ object AppModule {
     @Provides
     fun provideOkHttpClient(interceptor: HttpLoggingInterceptor): OkHttpClient =
         OkHttpClient.Builder()
+            .addInterceptor(interceptor)
             .addNetworkInterceptor(interceptor)
             .build()
 

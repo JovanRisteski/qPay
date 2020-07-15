@@ -18,4 +18,17 @@
     <string name="cancel">Cancel</string>
     <string name="recent_transactions">Recent transactions:</string>
     <string name="monthly_statistics">Monthly statistics</string>
+    <string name="merchant">Merchant: %s</string>
+    <string name="amount">Amount: %sden</string>
+    <string name="credit_cards">Credit cards:</string>
+    <string name="choose_a_card">Choose a card:</string>
+    <string name="review_transaction">Review transaction</string>
+    <string name="merchant_name">Merchant:</string>
+    <string name="merchant_category">Category:</string>
+    <string name="payment_total_amount">Total amount:</string>
+    <string name="show_details">Show details</string>
+    <string name="choose_payment_card">Pay with</string>
+    <string name="credit_card_number">**** **** **** %s</string>
+    <string name="change">Change</string>
+    <string name="approve">Pay</string>
 </resources>

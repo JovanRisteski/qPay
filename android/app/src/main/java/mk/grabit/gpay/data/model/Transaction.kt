@@ -6,9 +6,9 @@ import com.squareup.moshi.Json
 
 @Entity(tableName = "transaction")
 data class Transaction(
-    @PrimaryKey()
+    @PrimaryKey
     @Json(name = "payment_id") var paymentId: String,
     @Json(name = "merchant") val merchant: Merchant,
     @Json(name = "cart_info") val cart: List<Cart>,
-    @Json(name = "sum_total_mkd") val amount: Float
+    @Json(name = "amount") val amount: Float
 )

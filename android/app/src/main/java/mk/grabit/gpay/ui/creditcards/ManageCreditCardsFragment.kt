@@ -7,9 +7,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import mk.grabit.gpay.R
-import mk.grabit.gpay.data.model.CreditCard
 import mk.grabit.gpay.databinding.FragmentManageCreditCardsBinding
-import mk.grabit.gpay.util.CreditCardType
+import mk.grabit.gpay.util.Data
 
 class ManageCreditCardsFragment : Fragment(R.layout.fragment_manage_credit_cards) {
 
@@ -22,17 +21,12 @@ class ManageCreditCardsFragment : Fragment(R.layout.fragment_manage_credit_cards
         viewModel =
             ViewModelProviders.of(this).get(ManageCreditCardsFragmentViewModel::class.java)
 
-
-        val cards = arrayListOf(
-            CreditCard(1, "09/25", "John Doe", "Mastercard", CreditCardType.CREDIT),
-            CreditCard(2, "01/22", "John Doe", "Visa", CreditCardType.DEBIT)
-        )
         val cardsAdapter = CreditCardAdapter {
             Toast.makeText(requireContext(), it.id.toString(), Toast.LENGTH_SHORT).show()
         }
 
         binding?.creditCardsRecyclerView?.adapter = cardsAdapter
 
-        cardsAdapter.submitList(cards)
+        cardsAdapter.submitList(Data.CARDS)
     }
 }
