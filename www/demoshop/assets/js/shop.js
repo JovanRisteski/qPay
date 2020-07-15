@@ -87,7 +87,7 @@ function pollStatus() {
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         var response = JSON.parse(this.response)
-        if (response.code == 'approved') {
+        if (response.status == 'approved') {
             document.getElementById('QR').classList.add('d-none')
             document.getElementById('instructions').innerHTML = "Payment successful"
             document.getElementById('cancelPayment').classList.add('d-none')
@@ -95,7 +95,7 @@ function pollStatus() {
             window.clearInterval(statusPolling)
         }
 
-        if (response.code == 'canceled') {
+        if (response.status == 'canceled') {
             document.getElementById('QR').classList.add('d-none')
             document.getElementById('instructions').innerHTML = "Payment canceled"
             document.getElementById('cancelPayment').classList.add('d-none')
