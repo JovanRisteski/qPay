@@ -124,9 +124,9 @@ function pollStatus() {
             window.clearInterval(statusPolling)
         }
 
-        if (response.status == 'canceled') {
+        if (response.status == 'cancelled') {
             document.getElementById('QR').classList.add('d-none')
-            document.getElementById('instructions').innerHTML = "Payment canceled"
+            document.getElementById('instructions').innerHTML = "Payment cancelled"
             document.getElementById('cancelPayment').classList.add('d-none')
             document.getElementById('initPayment').classList.add('d-none')
             window.clearInterval(statusPolling)
