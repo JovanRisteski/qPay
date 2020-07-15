@@ -8,15 +8,15 @@ use App\Action\PaymentStatusAction;
 use App\Action\HomeAction;
 
 // Routes
-$app->get('/new', PaymentNewAction::class);
+$app->post('/new', PaymentNewAction::class);
 
-$app->get('/init', PaymentInitAction::class);
+$app->post('/init', PaymentInitAction::class);
 
-$app->get('/accept', PaymentAcceptAction::class);
+$app->post('/accept', PaymentAcceptAction::class);
 
-$app->get('/cancel', PaymentCancelAction::class);
+$app->post('/cancel', PaymentCancelAction::class);
 
-$app->get('/status', PaymentStatusAction::class);
+$app->post('/status', PaymentStatusAction::class);
 
 // Test.
 $app->get('/', HomeAction::class)
