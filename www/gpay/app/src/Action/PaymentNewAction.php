@@ -46,6 +46,6 @@ class PaymentNewAction
         return $response->withJson([
             'qr_code'    => base64_encode($qrCode->writeString()),
             'payment_id' => $payment_id->toString(),
-        ]);
+        ])->withHeader('Access-Control-Allow-Origin', '*');
     }
 }

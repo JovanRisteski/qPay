@@ -23,17 +23,19 @@ class PaymentCancelAction
         if (json_last_error() !== JSON_ERROR_NONE) {
             return $response
                 ->withStatus(400)
-                ->withJson(['code' => 'invalid_json', 'msg' => json_last_error_msg()]);
+                ->withJson(['code' => 'invalid_json', 'msg' => json_last_error_msg()])
+                ->withHeader('Access-Control-Allow-Origin', '*');
         }
 
         // Cancel payment.
         $paymentID = UuidV4::fromString($data['payment_id']);
         if (is_string($payment = $this->storage->cancel($paymentID))) {
-            return $response->withStatus(400)->withJson(['code' => $payment]);
+            return $response->withStatus(400)->withJson(['code' => $payment])
+            ->withHeader('Access-Control-Allow-Origin', '*');
         }
 
         return $response->withJson([
             'timestamp' => $payment['modified']
-        ]);
+        ])->withHeader('Access-Control-Allow-Origin', '*');
     }
 }

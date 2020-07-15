@@ -23,18 +23,20 @@ class PaymentStatusAction
         if (json_last_error() !== JSON_ERROR_NONE) {
             return $response
                 ->withStatus(400)
-                ->withJson(['code' => 'invalid_json', 'msg' => json_last_error_msg()]);
+                ->withJson(['code' => 'invalid_json', 'msg' => json_last_error_msg()])
+                ->withHeader('Access-Control-Allow-Origin', '*');
         }
 
         // Read payment.
         $paymentID = UuidV4::fromString($data['payment_id']);
         if (is_null($payment = $this->storage->read($paymentID))) {
-            return $response->withStatus(400)->withJson(['code' => 'invalid_payment_id']);
+            return $response->withStatus(400)->withJson(['code' => 'invalid_payment_id'])
+            ->withHeader('Access-Control-Allow-Origin', '*');
         }
 
         return $response->withJson([
             'status'   => $payment['status'],
             'modified' => $payment['modified']
-        ]);
+        ])->withHeader('Access-Control-Allow-Origin', '*');
     }
 }
