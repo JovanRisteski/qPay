@@ -34,22 +34,20 @@
         android:layout_marginEnd="32dp"
         android:gravity="center"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@id/label_transaction_info"
+        app:layout_constraintBottom_toTopOf="@id/ok_button"
         app:layout_constraintTop_toBottomOf="@id/transaction_status"
         app:layout_goneMarginBottom="32dp"
         tools:text="Your Visa *** **** **** 1234 with QPay was successfully charged." />
 
-    <TextView
-        android:id="@+id/label_transaction_info"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/ok_button"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
-        android:gravity="center"
-        android:text="@string/check_your_transactions_list"
-        android:textSize="18sp"
+        android:layout_marginTop="32dp"
+        android:text="@string/done"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/transaction_message" />
 </androidx.constraintlayout.widget.ConstraintLayout>

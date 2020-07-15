@@ -17,10 +17,6 @@
             android:icon="@drawable/ic_credit_card"
             android:title="@string/menu_manage_credit_cards" />
         <item
-            android:id="@+id/settingsFragment"
-            android:icon="@drawable/ic_menu_settings"
-            android:title="@string/menu_settings" />
-        <item
             android:id="@+id/loginFragment"
             android:icon="@drawable/ic_exit"
             android:title="@string/menu_logout" />

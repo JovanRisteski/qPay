@@ -28,14 +28,9 @@ class PaymentViewModel @ViewModelInject constructor(
     val showCardChooser: LiveData<Boolean>
         get() = _showCardChooser
 
-    private val _navigateToDashboardDelay = MutableLiveData<Boolean>()
-    val navigateToLoginDelay: LiveData<Boolean>
-        get() = _navigateToDashboardDelay
-
     init {
         // Always choose the first inserted credit card
         _creditCard.value = Data.CARDS[0]
-        _navigateToDashboardDelay.value = false
     }
 
     fun shouldShowCardChooser(show: Boolean) {
@@ -55,13 +50,6 @@ class PaymentViewModel @ViewModelInject constructor(
     fun cancelTransaction(transaction: Transaction) {
         viewModelScope.launch {
             repository.cancelTransaction(transaction)
-        }
-    }
-
-    fun delayDialog(milliseconds: Long) {
-        viewModelScope.launch {
-            delay(milliseconds)
-            _navigateToDashboardDelay.postValue(true)
         }
     }
 

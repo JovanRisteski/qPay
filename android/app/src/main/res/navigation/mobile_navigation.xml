@@ -76,7 +76,9 @@
         tools:layout="@layout/fragment_payment">
         <action
             android:id="@+id/action_paymentFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/paymentFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
 </navigation>

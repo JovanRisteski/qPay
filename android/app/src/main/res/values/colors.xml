@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="purple_200">#bb86fc</color>
-    <color name="purple_500">#6200ee</color>
+    <color name="purple_200">#4b01d0</color>
+    <color name="purple_500">#000867</color>
     <color name="purple_600">#4b01d0</color>
     <color name="purple_700">#3700b3</color>
 
-    <color name="green_200">#03dac6</color>
-    <color name="green_500">#018786</color>
+    <color name="green_200">#bcbcd4</color>
+    <color name="green_500">#5c649c</color>
     <color name="green_800">#277D00</color>
 
     <color name="red_200">#cf6679</color>

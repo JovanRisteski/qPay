@@ -1,13 +1,13 @@
 <resources>
-    <string name="app_name">gPay</string>
+    <string name="app_name">qPay</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">John Doe</string>
-    <string name="nav_header_subtitle">johndoe@gpay.mk</string>
+    <string name="nav_header_subtitle">johndoe@qpay.mk</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Wallet</string>
+    <string name="menu_home">qPay</string>
     <string name="menu_settings">Settings</string>
     <string name="menu_manage_credit_cards">Credit Cards</string>
     <string name="menu_transactions">Transactions</string>
@@ -35,8 +35,9 @@
     <string name="error_transaction">Your transaction was canceled or did not complete successfully.</string>
     <string name="payment_completed_successfully">Payment Completed Successfully!</string>
     <string name="payment_completed_error">Payment was successfully canceled!</string>
-    <string name="check_your_transactions_list">Check your transactions list.</string>
     <string name="try_again">Try again</string>
     <string name="an_error_occurred">An error occurred</string>
+    <string name="no_camera_permission">No camera permission</string>
+    <string name="done">Done</string>
 
 </resources>

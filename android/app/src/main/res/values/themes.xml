@@ -82,7 +82,7 @@
     </style>
 
     <style name="Widget.GPay.Button" parent="Widget.MaterialComponents.Button">
-        <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
+        <item name="android:textColor">?colorOnPrimary</item>
         <item name="backgroundTint">?attr/colorPrimary</item>
         <item name="android:stateListAnimator" tools:ignore="NewApi">
             @animator/next_button_state_list_anim

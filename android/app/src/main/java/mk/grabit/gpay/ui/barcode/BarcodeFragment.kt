@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -18,16 +19,13 @@ import androidx.navigation.fragment.NavHostFragment
 import com.google.zxing.Result
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.transaction_error_dialog.view.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 import mk.grabit.gpay.R
 import mk.grabit.gpay.databinding.FragmentBarcodeBinding
 import mk.grabit.gpay.util.ErrorCode
 import mk.grabit.gpay.util.RequestCode
 import mk.grabit.gpay.util.Resource
+
 
 @AndroidEntryPoint
 class BarcodeFragment : Fragment(R.layout.fragment_barcode), ZXingScannerView.ResultHandler {
@@ -49,8 +47,6 @@ class BarcodeFragment : Fragment(R.layout.fragment_barcode), ZXingScannerView.Re
         viewModel.transactionAction.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
-                    binding?.progressBar?.visibility = View.GONE
-                    binding?.surfaceView?.visibility = View.VISIBLE
                     sharedViewModel.setTransaction(it.data!!)
                     viewModel.acknowledgeTransactionActionStatus()
                     navigateToPaymentFragment()
@@ -63,10 +59,6 @@ class BarcodeFragment : Fragment(R.layout.fragment_barcode), ZXingScannerView.Re
                     binding?.progressBar?.visibility = View.GONE
                     binding?.surfaceView?.visibility = View.VISIBLE
                     showErrorDialog(it.message!!)
-
-                }
-                is Resource.None -> {
-
                 }
             }
         })
@@ -87,8 +79,9 @@ class BarcodeFragment : Fragment(R.layout.fragment_barcode), ZXingScannerView.Re
                 ErrorCode.NETWORK_ERROR -> "Network Error"
                 ErrorCode.INVALID_PAYMENT_ID -> "Invalid payment id"
                 ErrorCode.PAYMENT_CANCELED -> "Payment is already canceled"
-                ErrorCode.PAYMENT_NOT_FOUND -> "Payment was not found in our qPay database"
-                else -> "An error occured"
+                ErrorCode.PAYMENT_INITIATED -> "Payment is already initiated"
+                ErrorCode.PAYMENT_NOT_FOUND -> "Payment was not found in the qPay database"
+                else -> "An error occurred"
             }
             try_again_button.setOnClickListener {
                 viewModel.acknowledgeTransactionActionStatus()
@@ -106,6 +99,7 @@ class BarcodeFragment : Fragment(R.layout.fragment_barcode), ZXingScannerView.Re
 
     override fun onResume() {
         super.onResume()
+        (activity as AppCompatActivity?)?.supportActionBar?.title = "Scan a qPay QR code"
         if (ContextCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.CAMERA
@@ -133,7 +127,6 @@ class BarcodeFragment : Fragment(R.layout.fragment_barcode), ZXingScannerView.Re
     }
 
     private fun updateBarcode(barcode: String) {
-        binding?.barcodeTextView?.text = barcode
         viewModel.initPayment(barcode)
     }
 
@@ -159,8 +152,11 @@ class BarcodeFragment : Fragment(R.layout.fragment_barcode), ZXingScannerView.Re
                     mScannerView?.startCamera()          // Start camera on resume
                     mScannerView?.setResultHandler(this) // Register ourselves as a handler for scan results.
                 } else {
-                    Toast.makeText(requireContext(), "No camera permission", Toast.LENGTH_LONG)
-                        .show()
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.no_camera_permission),
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
         }

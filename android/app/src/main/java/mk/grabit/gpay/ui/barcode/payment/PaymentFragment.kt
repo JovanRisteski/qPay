@@ -3,7 +3,11 @@ package mk.grabit.gpay.ui.barcode.payment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -21,6 +25,7 @@ import mk.grabit.gpay.ui.barcode.SharedViewModel
 import mk.grabit.gpay.ui.creditcards.CreditCardAdapter
 import mk.grabit.gpay.util.Data
 import mk.grabit.gpay.util.Resource
+import java.util.concurrent.Executor
 
 @AndroidEntryPoint
 class PaymentFragment : Fragment(R.layout.fragment_payment) {
@@ -31,6 +36,11 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<NestedScrollView>
     private var card: CreditCard = Data.CARDS[0]
     private var alertDialog: AlertDialog? = null
+
+    private lateinit var executor: Executor
+    private lateinit var biometricPrompt: BiometricPrompt
+    private lateinit var promptInfo: BiometricPrompt.PromptInfo
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = DataBindingUtil.bind(view)
@@ -57,12 +67,19 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
         observeUi()
 
         binding?.approveButton?.setOnClickListener {
-            viewModel.approveTransaction(sharedViewModel.transaction.value!!)
+            biometricPrompt.authenticate(promptInfo)
         }
 
         binding?.cancelButton?.setOnClickListener {
             viewModel.cancelTransaction(sharedViewModel.transaction.value!!)
         }
+
+        showBiometrics()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as AppCompatActivity?)?.supportActionBar?.hide()
     }
 
     private fun observeUi() {
@@ -117,18 +134,54 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
                 }
             }
         })
-
-        viewModel.navigateToLoginDelay.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                alertDialog?.dismiss()
-
-                //TODO check if acknowledgeStatus is needed, same thing is done in PaymentViewModel
-                viewModel.acknowledgeTransactionApproveStatusNone()
-                viewModel.acknowledgeTransactionCancelStatusNone()
-                navigateToDashboard()
-            }
-        })
     }
+
+    private fun showBiometrics() {
+        executor = ContextCompat.getMainExecutor(requireContext())
+        biometricPrompt = BiometricPrompt(this, executor,
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationError(
+                    errorCode: Int,
+                    errString: CharSequence
+                ) {
+                    super.onAuthenticationError(errorCode, errString)
+                    Toast.makeText(
+                        requireContext(),
+                        "Authentication error: $errString", Toast.LENGTH_SHORT
+                    )
+                        .show()
+                }
+
+                override fun onAuthenticationSucceeded(
+                    result: BiometricPrompt.AuthenticationResult
+                ) {
+                    super.onAuthenticationSucceeded(result)
+                    Toast.makeText(
+                        requireContext(),
+                        "Authentication succeeded!", Toast.LENGTH_SHORT
+                    )
+                        .show()
+                    viewModel.approveTransaction(sharedViewModel.transaction.value!!)
+                }
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    Toast.makeText(
+                        requireContext(), "Authentication failed",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                }
+            })
+
+        promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Biometric login for my app")
+            .setSubtitle("Log in using your biometric credential")
+            .setNegativeButtonText("Use account password")
+            .build()
+
+    }
+
 
     private fun showCreditCards() {
         bottomSheetBehavior.isHideable = true
@@ -168,14 +221,24 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
                 getString(R.string.success_transaction, card.manufacturer, card.lastDigits)
             else
                 getString(R.string.error_transaction)
-        dialogView.label_transaction_info?.visibility =
-            if (isSuccessful) View.VISIBLE else View.GONE
+
+        dialogView.ok_button?.setOnClickListener {
+            alertDialog?.dismiss()
+            viewModel.acknowledgeTransactionApproveStatusNone()
+            viewModel.acknowledgeTransactionCancelStatusNone()
+            navigateToDashboard()
+        }
+
         alertDialog?.show()
-        viewModel.delayDialog(10000)
     }
 
     private fun navigateToDashboard() {
         val action = PaymentFragmentDirections.actionPaymentFragmentToHomeFragment()
         NavHostFragment.findNavController(this).navigate(action)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (activity as AppCompatActivity?)?.supportActionBar?.show()
     }
 }
