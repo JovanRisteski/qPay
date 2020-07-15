@@ -3,29 +3,27 @@ package mk.grabit.gpay.networking
 import mk.grabit.gpay.data.model.Transaction
 import mk.grabit.gpay.data.model.TransactionResponse
 import retrofit2.Response
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface GPayService {
 
+    @Headers("Content-Type: application/json")
     @GET("transactions")
     suspend fun getAllTransactions(): Response<List<Transaction>>
 
-    @FormUrlEncoded
+    @Headers("Content-Type: application/json")
     @POST("/init")
-    suspend fun initTransaction(@Field("payment_id") id: String): Response<Transaction>
+    suspend fun initTransaction(@Body body: Map<String, String>): Response<Transaction>
 
-    @FormUrlEncoded
+    @Headers("Content-Type: application/json")
     @POST("/accept")
-    suspend fun acceptTransaction(@Field("payment_id") id: String): Response<TransactionResponse>
+    suspend fun acceptTransaction(@Body body: Map<String, String>): Response<TransactionResponse>
 
-    @FormUrlEncoded
+    @Headers("Content-Type: application/json")
     @POST("/cancel")
-    suspend fun cancelTransaction(@Field("payment_id") id: String): Response<TransactionResponse>
+    suspend fun cancelTransaction(@Body body: Map<String, String>): Response<TransactionResponse>
 
-    @FormUrlEncoded
+    @Headers("Content-Type: application/json")
     @POST("/status")
-    suspend fun transactionStatus(@Field("payment_id") id: String): Response<TransactionResponse>
+    suspend fun transactionStatus(@Body body: Map<String, String>): Response<TransactionResponse>
 }

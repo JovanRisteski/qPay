@@ -1,3 +1,6 @@
 package mk.grabit.gpay.data.model
 
-data class TransactionResponse(val code: String)
+import mk.grabit.gpay.util.Helper
+
+
+data class TransactionResponse(val code: String?, val timestamp: String?  = Helper.getCurrentTimestamp())

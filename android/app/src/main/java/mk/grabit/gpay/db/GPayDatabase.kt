@@ -9,7 +9,7 @@ import mk.grabit.gpay.data.model.Transaction
 
 @Database(
     entities = [Transaction::class],
-    version = 6,
+    version = 9,
     exportSchema = false
 )
 @TypeConverters(

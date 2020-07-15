@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import mk.grabit.gpay.data.model.CreditCard
 import mk.grabit.gpay.data.model.Transaction
@@ -15,7 +16,8 @@ class PaymentViewModel @ViewModelInject constructor(
     val repository: MainRepository
 ) : ViewModel() {
 
-    val transactionStatus = repository.status
+    val transactionApproveStatus = repository.transactionApproveStatus
+    val transactionCancelStatus = repository.transactionCancelStatus
 
     private val _creditCard = MutableLiveData<CreditCard>()
     val creditCard: LiveData<CreditCard>
@@ -26,9 +28,14 @@ class PaymentViewModel @ViewModelInject constructor(
     val showCardChooser: LiveData<Boolean>
         get() = _showCardChooser
 
+    private val _navigateToDashboardDelay = MutableLiveData<Boolean>()
+    val navigateToLoginDelay: LiveData<Boolean>
+        get() = _navigateToDashboardDelay
+
     init {
         // Always choose the first inserted credit card
         _creditCard.value = Data.CARDS[0]
+        _navigateToDashboardDelay.value = false
     }
 
     fun shouldShowCardChooser(show: Boolean) {
@@ -49,5 +56,21 @@ class PaymentViewModel @ViewModelInject constructor(
         viewModelScope.launch {
             repository.cancelTransaction(transaction)
         }
+    }
+
+    fun delayDialog(milliseconds: Long) {
+        viewModelScope.launch {
+            delay(milliseconds)
+            _navigateToDashboardDelay.postValue(true)
+        }
+    }
+
+    fun acknowledgeTransactionApproveStatusNone() = repository.acknowledgeTransactionApproveStatusNone()
+    fun acknowledgeTransactionCancelStatusNone() = repository.acknowledgeTransactionCancelStatusNone()
+
+    override fun onCleared() {
+        acknowledgeTransactionApproveStatusNone()
+        acknowledgeTransactionCancelStatusNone()
+        super.onCleared()
     }
 }

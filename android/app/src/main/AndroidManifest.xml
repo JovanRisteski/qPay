@@ -8,9 +8,9 @@
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"
-        android:icon="@drawable/qr_code_logo_transparent"
+        android:icon="@drawable/qpay_logo"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/qr_code_logo_transparent"
+        android:roundIcon="@drawable/qpay_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApp"
         android:usesCleartextTraffic="true">

@@ -12,7 +12,7 @@ object Data {
             "123",
             Merchant("Tinex", "Shopping"),
             arrayListOf(Cart("kafe", "Paskalin", 12, 70f)),
-            1400.00f
+            amount = 1400.00f
         ),
         Transaction(
             "123",
@@ -25,7 +25,7 @@ object Data {
                     1200f
                 )
             ),
-            1200.00f
+            amount = 1200.00f
         ),
         Transaction(
             "124",
@@ -39,17 +39,17 @@ object Data {
                 ),
                 Cart("CocaCola", "CocaCola, big cup", 2, 140f)
             ),
-            480.00f
+            amount = 480.00f
         ), Transaction(
             "125",
             Merchant("Timberland Center", "Shoes Store"),
             arrayListOf(Cart("Shoes", "Leather Shoes model #482", 1, 3480f)),
-            3480.00f
+            amount = 3480.00f
         ), Transaction(
             "126",
             Merchant("Bet365", "Bet & Win"),
             arrayListOf(Cart("Sport ticket", "Bet & Win sport tickets 24/7", 5, 100f)),
-            500.00f
+            amount = 500.00f
         )
         , Transaction(
             "127",
@@ -59,13 +59,13 @@ object Data {
                 Cart("Illy Coffee", "Coffee Illy ARABICA 500g", 1, 540f),
                 Cart("Coffee", "Gold", 1, 70f)
             ),
-            659.00f
+            amount = 659.00f
         )
         , Transaction(
             "128",
             Merchant("GANT", "Clothes"),
             arrayListOf(Cart("Pants", "Gant pants season summer 2020", 1, 1800f)),
-            1800.00f
+            amount = 1800.00f
         )
     )
 

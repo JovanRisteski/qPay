@@ -1,18 +1,26 @@
 package mk.grabit.gpay.ui.barcode
 
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import mk.grabit.gpay.data.model.Transaction
 import mk.grabit.gpay.data.repository.MainRepository
 
 class BarcodeViewModel @ViewModelInject constructor(
     val repository: MainRepository
 ) : ViewModel() {
 
-    val transactionStatus = repository.status
     val transactionAction = repository.transactionAction
+    private val _isReady = MutableLiveData<Boolean>()
+    val isReady: LiveData<Boolean>
+        get() = _isReady
+
+    init {
+        _isReady.value = true
+    }
 
     fun initPayment(paymentId: String) {
         viewModelScope.launch {
@@ -20,19 +28,14 @@ class BarcodeViewModel @ViewModelInject constructor(
         }
     }
 
-    fun approveTransaction(transaction: Transaction) {
+    fun pauseScanning(milliseconds: Long) {
+        _isReady.value = false
         viewModelScope.launch {
-            repository.acceptTransaction(transaction)
-        }
-    }
-
-    fun cancelTransaction(transaction: Transaction) {
-        viewModelScope.launch {
-            repository.cancelTransaction(transaction)
+            delay(milliseconds)
+            _isReady.postValue(true)
         }
     }
 
     fun acknowledgeTransactionActionStatus() = repository.acknowledgeTransactionActionNone()
-    fun acknowledgeTransactionStatusNone() = repository.acknowledgeTransactionStatusNone()
 
 }

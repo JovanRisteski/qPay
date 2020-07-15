@@ -16,9 +16,9 @@ interface TransactionDao {
     @Delete
     suspend fun deleteTransaction(transaction: Transaction)
 
-    @Query("SELECT * FROM `transaction` ORDER BY paymentId DESC")
+    @Query("SELECT * FROM `transaction` ORDER BY timestamp DESC")
     fun getAllTransactions(): LiveData<List<Transaction>>
 
-    @Query("SELECT * FROM `transaction` ORDER BY paymentId DESC LIMIT 5")
+    @Query("SELECT * FROM `transaction` ORDER BY timestamp DESC LIMIT 5")
     fun getLastTransactions(): LiveData<List<Transaction>>
 }

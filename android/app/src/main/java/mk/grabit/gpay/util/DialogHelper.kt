@@ -5,30 +5,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
-import kotlinx.android.synthetic.main.proceed_transaction_dialog.view.*
+import kotlinx.android.synthetic.main.transaction_error_dialog.view.*
 import mk.grabit.gpay.R
 
 object DialogHelper {
-    fun createCustomAlertDialog(
-        context: Context,
-        doneButtonListener: (AlertDialog) -> Unit,
-        cancelButtonListener: (AlertDialog) -> Unit
-    ): AlertDialog {
-
-        val dialogView =
-            LayoutInflater.from(context).inflate(R.layout.proceed_transaction_dialog, null)
-
-        val alertDialog = AlertDialog.Builder(context).apply {
-            setView(dialogView)
-            setCancelable(false)
-        }.create()
-
-        dialogView.proceed_button.setOnClickListener { doneButtonListener(alertDialog) }
-        dialogView.cancel_button.setOnClickListener { cancelButtonListener(alertDialog) }
-
-        return alertDialog
-    }
-
 
     fun createProgressDialog(
         context: Context?,

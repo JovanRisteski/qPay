@@ -25,12 +25,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnChartValueSelectedListe
 
     private val viewModel: HomeViewModel by viewModels()
     private var binding: FragmentHomeBinding? = null
-    private val parties = arrayOf(
-        "Party A", "Party B", "Party C", "Party D", "Party E", "Party F", "Party G", "Party H",
-        "Party I", "Party J", "Party K", "Party L", "Party M", "Party N", "Party O", "Party P",
-        "Party Q", "Party R", "Party S", "Party T", "Party U", "Party V", "Party W", "Party X",
-        "Party Y", "Party Z"
-    )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -53,9 +47,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnChartValueSelectedListe
     }
 
     private fun observeUi(transactionAdapter: TransactionAdapter) {
+
         viewModel.transactions.observe(viewLifecycleOwner, Observer {
-            transactionAdapter.submitList(it) {
+            transactionAdapter.submitList(it.take(5)) {
                 viewModel.setIsLoading(false)
+                binding?.transactionRecyclerViewAdapter?.smoothScrollToPosition(0);
             }
         })
 
@@ -172,10 +168,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnChartValueSelectedListe
 
 
     override fun onNothingSelected() {
-        TODO("Not yet implemented")
+
     }
 
     override fun onValueSelected(e: Entry?, h: Highlight?) {
-        TODO("Not yet implemented")
+
     }
 }

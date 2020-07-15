@@ -31,4 +31,12 @@
     <string name="credit_card_number">**** **** **** %s</string>
     <string name="change">Change</string>
     <string name="approve">Pay</string>
+    <string name="success_transaction">Your <b>%s *** **** **** %s with QPay</b> was successfully charged.</string>
+    <string name="error_transaction">Your transaction was canceled or did not complete successfully.</string>
+    <string name="payment_completed_successfully">Payment Completed Successfully!</string>
+    <string name="payment_completed_error">Payment was successfully canceled!</string>
+    <string name="check_your_transactions_list">Check your transactions list.</string>
+    <string name="try_again">Try again</string>
+    <string name="an_error_occurred">An error occurred</string>
+
 </resources>

@@ -15,7 +15,7 @@ class HomeViewModel @ViewModelInject constructor(
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
-    val transactions = repository.lastTransactions
+    val transactions = repository.transactions
 
     fun setIsLoading(loadingStatus: Boolean) {
         _isLoading.value = loadingStatus

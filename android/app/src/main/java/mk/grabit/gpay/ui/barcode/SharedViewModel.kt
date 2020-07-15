@@ -14,10 +14,4 @@ class SharedViewModel : ViewModel() {
     fun setTransaction(transaction: Transaction) {
         _transaction.value = transaction
     }
-
-    override fun onCleared() {
-        println("SHARED VIEW MODEL CLEARED")
-        super.onCleared()
-
-    }
 }
