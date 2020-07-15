@@ -51,7 +51,7 @@ class PaymentService
         // Payment not found.
         if (empty($payment)) {
             $this->pdo->commit();
-            return 'invalid_payment_id';
+            return 'payment_not_found';
         }
 
         // Payment has bad status.
@@ -99,7 +99,7 @@ class PaymentService
         // Payment not found.
         if (empty($payment)) {
             $this->pdo->commit();
-            return 'invalid_payment_id';
+            return 'payment_not_found';
         }
 
         // Payment has bad status.
@@ -145,7 +145,7 @@ class PaymentService
         // Payment not found.
         if (empty($payment)) {
             $this->pdo->commit();
-            return 'invalid_payment_id';
+            return 'payment_not_found';
         }
 
         // Payment has bad status.

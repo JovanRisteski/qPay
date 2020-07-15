@@ -2,8 +2,8 @@
 
 namespace App\Action;
 
+use App\Payment\PaymentID;
 use App\Payment\PaymentService;
-use Ramsey\Uuid\Rfc4122\UuidV4;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -19,19 +19,31 @@ class PaymentStatusAction
     public function __invoke(Request $request, Response $response)
     {
         // Parse JSON.
-        $data = json_decode($request->getBody(), true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
+        if (is_string($json = JSONUtils::parseAsObj($request->getBody()))) {
             return $response
                 ->withStatus(400)
-                ->withJson(['code' => 'invalid_json', 'msg' => json_last_error_msg()])
-                ->withHeader('Access-Control-Allow-Origin', '*');
+                ->withJson(['code' => 'invalid_json', 'msg' => $json]);
         }
 
-        // Read payment.
-        $paymentID = UuidV4::fromString($data['payment_id']);
+        // Read PaymentID.
+        if (!property_exists($json, 'payment_id')) {
+            return $response
+                ->withStatus(400)
+                ->withJson(['code' => 'missing_payment_id']);
+        }
+
+        // Parse PaymentID.
+        if (is_string($paymentID = PaymentID::parse($json->payment_id))) {
+            return $response
+                ->withStatus(400)
+                ->withJson(['code' => 'invalid_payment_id', 'msg' => $paymentID]);
+        }
+
+        // Fetch payment.
         if (is_null($payment = $this->storage->read($paymentID))) {
-            return $response->withStatus(400)->withJson(['code' => 'invalid_payment_id'])
-            ->withHeader('Access-Control-Allow-Origin', '*');
+            return $response
+                ->withStatus(400)
+                ->withJson(['code' => 'payment_not_found']);
         }
 
         return $response->withJson([
