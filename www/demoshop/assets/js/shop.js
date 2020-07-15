@@ -42,8 +42,37 @@ function initiatePayment() {
     var xhttp = new XMLHttpRequest();
     var params = {
         reference_number: Math.floor(Math.random() * 1000) + 1,
-        amount: cart
+        amount: cart,
+        details: []
     }
+
+    if (p1 > 0) {
+        var dataP1 = {
+            item_name: "Product 1",
+            item_quantity: p1,
+            item_price: 10
+        }
+        params.details.push(dataP1)
+    }
+
+    if (p2 > 0) {
+        var dataP2 = {
+            item_name: "Product 2",
+            item_quantity: p2,
+            item_price: 20
+        }
+        params.details.push(dataP2)
+    }
+
+    if (p3 > 0) {
+        var dataP3 = {
+            item_name: "Product 3",
+            item_quantity: p3,
+            item_price: 50
+        }
+        params.details.push(dataP3)
+    }
+
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         var qrImage = document.getElementById('QR')
