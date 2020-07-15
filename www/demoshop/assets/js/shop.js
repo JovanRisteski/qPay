@@ -4,6 +4,7 @@ var p3 = 0;
 var cart = 0;
 var statusPolling;
 var paymentId = '';
+var apiUrl = 'http://localhost';
 
 function increaseP1() {
     p1 = p1 +1
@@ -56,7 +57,7 @@ function initiatePayment() {
         statusPolling = window.setInterval(pollStatus, 1000)
       }
     };
-    xhttp.open("POST", "http://localhost/new", true);
+    xhttp.open("POST", apiUrl + "/new", true);
     xhttp.send(JSON.stringify(params));
 }
 
@@ -74,7 +75,7 @@ function cancelPayment() {
         window.clearInterval(statusPolling)
       }
     };
-    xhttp.open("POST", "http://localhost/cancel", true);
+    xhttp.open("POST", apiUrl + "/cancel", true);
     xhttp.send(JSON.stringify(params));
 }
 
@@ -103,6 +104,6 @@ function pollStatus() {
         }
       }
     };
-    xhttp.open("POST", "http://localhost/status", true);
+    xhttp.open("POST", apiUrl + "/status", true);
     xhttp.send(JSON.stringify(params));
 }
